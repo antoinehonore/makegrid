@@ -32,6 +32,7 @@ npm init using barketplace/makegrid
 The parameter grid is defined in a json file, e.g. `configs/example.json`.
 
 Note 1: The field names must not contain the colon(`:`) character.
+
 Note 2: Computing all the combinations of parameters is done in only 1 process. It takes a while to compute when the grid `>1000` combinations.
 
 1. Create all the possible combinations of parameters in the grid:
