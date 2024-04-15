@@ -105,7 +105,7 @@ To adapt for this, modify the recipe corresponding to the last target in the `Ma
 $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
-The symbol `$^` refers to the first dependency (`$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
+The symbol `$^` refers to all the dependencies (here `$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
 In makegrid, the first (and only) dependency is a configuration file.
 
 Note: Here the targets are never actually created and are just placeholders to trigger the execution of the recipies.
