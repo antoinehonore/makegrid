@@ -82,8 +82,11 @@ The `--nv` flag maps the nvidia binaries in the container and makes GPU visible 
 ### Non-python code
 The repo is still usable if your parameter grid configures scripts that are written in Python. To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
 ```bash
-	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
+$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
 The symbol `$^` refers to the first dependency (i.e. the numbered config file passed `$(cfg_dir)/$(indir)/%.json`) required to produce the target.
 To manipulate the `Makefile` it's a good idea to learn about the generic principles, e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/)
+
+
+
