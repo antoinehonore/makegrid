@@ -3,11 +3,17 @@
 # makegrid
 Run a grid of parameters in multiple processes.
 
-
 ## Requirements
-make, python
+You need make and Python.
+To understand the `Makefile` you can look at e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/).
+
+### For Debian/Ubuntu:
 ```bash
 $ apt-get install build-essential make
+```
+
+```bash
+$ apt-get install python3
 ```
 
 ## Install
@@ -16,7 +22,7 @@ To create a new project based on makegrid, simply clone the repo:
 $ git clone https://github.com/barketplace/makegrid 
 ```
 
-To download the files in an existing project without tempering with existing `.git/`, you need npm:
+To download the files in an existing project without tempering with existing `.git/`, you need `npm`:
 ```bash
 $ npm init using barketplace/makegrid
 ```
@@ -97,8 +103,6 @@ $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
 The symbol `$^` refers to the first dependency (`$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
+
 Note: Here the targets are never actually created and are just placeholders to trigger the execution of the recipies.
-To manipulate the `Makefile` it's a good idea to learn about the generic principles, e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/)
-
-
 
