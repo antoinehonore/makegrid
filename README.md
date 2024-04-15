@@ -36,7 +36,7 @@ $ cat configs/example/1.json
 }
 ```
 
-2. For a dry-run of the grid:
+2. For a dry-run of the grid, use the `-n` option :
 
 ```bash
 $ make indir=example script=main.py -n
@@ -62,5 +62,17 @@ $ make indir=example n_jobs=4 -j 2
 
 ## Interpreter
 You need a python interpreter to run the `make init` command, i.e. to compute the combination of options in a grid.
-The interpreter is specified in the `cfg.mk` file.
 
+### On the host
+The interpreter is specified in the `cfg.mk` file, e.g. :
+```bash
+PYTHON=python
+```
+
+### In a container
+To use a python interpreter inside an apptainer (i.e. singularity) container file `env.sif`, you can use e.g.
+```bash
+PYTHON=apptainer exec --nv env.sif python3
+```
+
+The `--nv` flag maps the nvidia binaries in the container and makes GPU visible to python.
