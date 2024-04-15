@@ -38,6 +38,8 @@ $ cat configs/example/1.json
 }
 ```
 
+Note: The field names must not contain the character ':'.
+
 2. For a dry-run of the grid, use the `-n` option :
 
 ```bash
@@ -63,7 +65,7 @@ $ make indir=example n_jobs=4 -j 2
 ```
 
 ## Interpreter
-You need a python interpreter at least to run the `make init` command, i.e. to compute the combination of options in a grid.
+You need a Python interpreter in order to run the `make init` command, i.e. to compute the combination of options in a grid.
 
 ### On the host
 The interpreter is specified in the `cfg.mk` file, e.g. :
