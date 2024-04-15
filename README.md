@@ -25,10 +25,15 @@ $ npm init using barketplace/makegrid
 ## Example
 The parameter grid is defined in a json file, e.g. `configs/example.json`.
 
-1. Create all the possible combination of parameters in the grid:
+Note: The field names must not contain the colon(`:`) character.
+
+1. Create all the possible combinations of parameters in the grid:
 ```bash
 $ make init indir=example
+```
 
+Look at the first combination:
+```bash
 $ cat configs/example/1.json 
 {
    "set_of_options1": {
@@ -37,8 +42,6 @@ $ cat configs/example/1.json
    }
 }
 ```
-
-Note: The field names must not contain the character ':'.
 
 2. For a dry-run of the grid, use the `-n` option :
 
@@ -57,8 +60,13 @@ python main.py -i configs/example/7.json -v 0 -j 1
 python main.py -i configs/example/8.json -v 0 -j 1
 python main.py -i configs/example/9.json -v 0 -j 1
 ```
+This lists all the commands that will be executed.
 
-3. For a real run of the parameter grid defined in configs/example, using 2 parallel processes, and with 4 tasks per process.
+By default, a Python interpreter and a `main.py` script taking at least arguments `-i` , `-v` and `-j` are expected.
+
+Note: The name of the script can be edited in the `Makefile` or passed as an argument: `script=main.py`.
+
+3. For a real run of all the configurations, using 2 parallel processes, and with 4 tasks per process:
 
 ```bash
 $ make indir=example n_jobs=4 -j 2
@@ -66,28 +74,30 @@ $ make indir=example n_jobs=4 -j 2
 
 ## Interpreter
 You need a Python interpreter in order to run the `make init` command, i.e. to compute the combination of options in a grid.
+The interpreter is specified in the `cfg.mk` file.
 
-### On the host
-The interpreter is specified in the `cfg.mk` file, e.g. :
+### Python interpreter on the host
 ```bash
 PYTHON=python
 ```
 
 ### In a container
-To use a python interpreter inside an apptainer (i.e. singularity) container file `env.sif`, you can use e.g.
+To use a python interpreter inside an "apptainer" container file `env.sif`, you can use e.g.
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
 
-The `--nv` flag maps the nvidia binaries in the container and makes GPU visible to python.
+The `--nv` flag is specific to singularity and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
+To read more about apptainer: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
 
 ### Non-python code
-The repo is still usable if your parameter grid configures scripts that are written in Python. To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
+The repo is still usable if your parameter grid configures scripts that are not written in Python. To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
 ```bash
 $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
-The symbol `$^` refers to the first dependency (i.e. the numbered config file passed `$(cfg_dir)/$(indir)/%.json`) required to produce the target.
+The symbol `$^` refers to the first dependency (`$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
+Note: Here the targets are never actually created and are just placeholders to trigger the execution of the recipies.
 To manipulate the `Makefile` it's a good idea to learn about the generic principles, e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/)
 
 
