@@ -41,7 +41,7 @@ $ cat configs/example/1.json
 2. For a dry-run of the grid, use the `-n` option :
 
 ```bash
-$ make indir=example script=main.py -n
+$ make indir=example script=main.py n_jobs=4 verbose=1 -n
 python main.py -i configs/example/10.json -v 0 -j 1
 python main.py -i configs/example/11.json -v 0 -j 1
 python main.py -i configs/example/12.json -v 0 -j 1
@@ -56,14 +56,14 @@ python main.py -i configs/example/8.json -v 0 -j 1
 python main.py -i configs/example/9.json -v 0 -j 1
 ```
 
-3. Real run of the parameter grid defined in configs/example in two independent processes, with 4 tasks per processes.
+3. For a real run of the parameter grid defined in configs/example, using 2 parallel processes, and with 4 tasks per process.
 
 ```bash
 $ make indir=example n_jobs=4 -j 2
 ```
 
 ## Interpreter
-You need a python interpreter to run the `make init` command, i.e. to compute the combination of options in a grid.
+You need a python interpreter at least to run the `make init` command, i.e. to compute the combination of options in a grid.
 
 ### On the host
 The interpreter is specified in the `cfg.mk` file, e.g. :
@@ -78,3 +78,12 @@ PYTHON=apptainer exec --nv env.sif python3
 ```
 
 The `--nv` flag maps the nvidia binaries in the container and makes GPU visible to python.
+
+### Non-python code
+The repo is still usable if your parameter grid configures scripts that are written in Python. To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
+```bash
+	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
+```
+
+The symbol `$^` refers to the first dependency (i.e. the numbered config file passed `$(cfg_dir)/$(indir)/%.json`) required to produce the target.
+To manipulate the `Makefile` it's a good idea to learn about the generic principles, e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/)
