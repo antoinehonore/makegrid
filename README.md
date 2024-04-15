@@ -9,22 +9,22 @@ To understand the `Makefile` you can look at e.g. ![https://makefiletutorial.com
 
 ### For Debian/Ubuntu:
 ```bash
-$ apt-get install build-essential make
+apt-get install build-essential make
 ```
 
 ```bash
-$ apt-get install python3
+apt-get install python3
 ```
 
 ## Install
 To create a new project based on makegrid, simply clone the repo:
 ```bash
-$ git clone https://github.com/barketplace/makegrid 
+git clone https://github.com/barketplace/makegrid 
 ```
 
 To download the files in an existing project without tempering with existing `.git/`, you need `npm`:
 ```bash
-$ npm init using barketplace/makegrid
+npm init using barketplace/makegrid
 ```
 
 
@@ -35,7 +35,7 @@ Note: The field names must not contain the colon(`:`) character.
 
 1. Create all the possible combinations of parameters in the grid:
 ```bash
-$ make init indir=example
+make init indir=example
 ```
 
 Look at the first combination:
@@ -75,7 +75,7 @@ Note: The name of the script can be edited in the `Makefile` or passed as an arg
 3. For a real run of all the configurations, using 2 parallel processes, and with 4 tasks per process:
 
 ```bash
-$ make indir=example n_jobs=4 -j 2
+make indir=example n_jobs=4 -j 2
 ```
 
 ## Interpreter
