@@ -35,7 +35,7 @@ Note 1: The field names must not contain the colon(`:`) character.
 
 Note 2: Computing all the combinations of parameters is done in only 1 process. It takes a while to compute when the grid `>1000` combinations.
 
-1. Create all the possible combinations of parameters in the grid:
+1. Create all the `12` possible combinations of parameters in the grid defined in `configs/example.json`:
 ```bash
 make init indir=example
 ```
