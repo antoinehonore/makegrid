@@ -53,20 +53,20 @@ $ cat configs/example/1.json
 
 ```bash
 $ make indir=example script=main.py n_jobs=4 verbose=1 -n
-python main.py -i configs/example/10.json -v 0 -j 1
-python main.py -i configs/example/11.json -v 0 -j 1
-python main.py -i configs/example/12.json -v 0 -j 1
-python main.py -i configs/example/1.json -v 0 -j 1
-python main.py -i configs/example/2.json -v 0 -j 1
-python main.py -i configs/example/3.json -v 0 -j 1
-python main.py -i configs/example/4.json -v 0 -j 1
-python main.py -i configs/example/5.json -v 0 -j 1
-python main.py -i configs/example/6.json -v 0 -j 1
-python main.py -i configs/example/7.json -v 0 -j 1
-python main.py -i configs/example/8.json -v 0 -j 1
-python main.py -i configs/example/9.json -v 0 -j 1
+python main.py -i configs/example/10.json -v 1 -j 4
+python main.py -i configs/example/11.json -v 1 -j 4
+python main.py -i configs/example/12.json -v 1 -j 4
+python main.py -i configs/example/1.json -v 1 -j 4
+python main.py -i configs/example/2.json -v 1 -j 4
+python main.py -i configs/example/3.json -v 1 -j 4
+python main.py -i configs/example/4.json -v 1 -j 4
+python main.py -i configs/example/5.json -v 1 -j 4
+python main.py -i configs/example/6.json -v 1 -j 4
+python main.py -i configs/example/7.json -v 1 -j 4
+python main.py -i configs/example/8.json -v 1 -j 4
+python main.py -i configs/example/9.json -v 1 -j 4
 ```
-This lists all the commands that will be executed.
+This lists all the `12` commands that will be executed.
 
 By default, a Python interpreter and a `main.py` script taking at least arguments `-i` , `-v` and `-j` are expected.
 
@@ -97,12 +97,14 @@ The `--nv` flag is specific to singularity and maps the nvidia binaries inside t
 To read more about apptainer: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
 
 ### Non-python code
-The repo is still usable if your parameter grid configures scripts that are not written in Python. To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
+The repo is still usable if your parameter grid configures scripts that are not written in Python. 
+To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
 ```bash
 $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
 The symbol `$^` refers to the first dependency (`$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
+In makegrid, the first (and only) dependency is a configuration file.
 
 Note: Here the targets are never actually created and are just placeholders to trigger the execution of the recipies.
 
