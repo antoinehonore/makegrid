@@ -35,5 +35,6 @@ init: $(cfg_dir)/$(indir).json
 	$(PYTHON) gen_json.py -i $^
 	find $(cfg_dir)/$(indir) -type f -name "*.json" | wc -w
 
+# User specific targets
 $(res_dir)/$(indir)/%.pkl: $(cfg_dir)/$(indir)/%.json
 	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
