@@ -72,7 +72,7 @@ PYTHON=python
 ```
 
 ### In a container
-To use a python interpreter inside an apptainer (i.e. singularity) container file `env.sif`, you can use e.g.
+To use a python interpreter inside an apptainer container file `env.sif`, you can use e.g.
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
