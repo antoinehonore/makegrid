@@ -28,6 +28,7 @@ npm init using barketplace/makegrid
 ```
 
 
+
 ## Example
 The parameter grid is defined in a json file, e.g. `configs/example.json`.
 
@@ -37,7 +38,9 @@ Note 2: Computing all the combinations of parameters is done in only 1 process. 
 
 1. Create all the `12` possible combinations of parameters in the grid defined in `configs/example.json`:
 ```bash
-make init indir=example
+make example-init
+[OR]
+make -f makefile.mk init indir=example
 ```
 
 Look at the first combination:
@@ -54,7 +57,7 @@ $ cat configs/example/1.json
 2. For a dry-run of the grid, use the `-n` option :
 
 ```bash
-$ make indir=example script=main.py n_jobs=4 verbose=1 -n
+$ make -f makefile.mk indir=example script=main.py n_jobs=4 verbose=1 -n
 python main.py -i configs/example/10.json -v 1 -j 4
 python main.py -i configs/example/11.json -v 1 -j 4
 python main.py -i configs/example/12.json -v 1 -j 4
@@ -77,11 +80,11 @@ Note: The name of the script can be edited in the `Makefile` or passed as an arg
 3. For a real run of all the configurations, using 2 parallel processes, and with 4 tasks per process:
 
 ```bash
-make indir=example n_jobs=4 -j 2
+make -f makefile.mk indir=example n_jobs=4 -j 2
 ```
 
 ## Interpreter
-You need a Python interpreter in order to run the `make init` command, i.e. to compute the combination of options in a grid.
+You need a Python interpreter in order to run the `make -f makefile.mk init indir=example` command, i.e. to compute the combination of options in a grid.
 The interpreter is specified in the `cfg.mk` file.
 
 ### Python interpreter on the host
