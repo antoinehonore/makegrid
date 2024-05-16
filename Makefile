@@ -1,8 +1,7 @@
-CARGS=
+SHELL=/bin/bash
 
-ifdef retrain
-	CARGS=--retrain
-endif
+include cfg.mk 
+#PYTHON=python
 
 ifndef verbose
 	verbose=0
@@ -16,10 +15,26 @@ ifndef script
 	script=main.py
 endif
 
-MK_ARGS = verbose=$(verbose) n_jobs=$(n_jobs) script=$(script)
+cfg_dir=configs
+res_dir=results
 
-%:
-	make -f makefile.mk indir=$* $(MK_ARGS) CARGS=$(CARGS)
-%-init:
-	make -f makefile.mk indir=$* $(MK_ARGS) CARGS=$(CARGS) init
+usage="USAGE:\nmake init indir=example\nmake script=main.py indir=example verbose=1 n_jobs=<Number of tasks per process> -j <Total number of processes>"
 
+all_configs=$(shell ls $(cfg_dir)/$(indir))
+all_targets=$(addprefix $(res_dir)/$(indir)/,$(foreach fname,$(all_configs),$(shell echo $(fname) | sed 's/.json/.pkl/g')))
+all_converted=$(addprefix $(res_dir)/$(indir)/,$(foreach fname,$(all_configs),$(shell echo $(fname) | sed 's/.json/.csv/g')))
+
+all: $(all_targets)
+	@echo $^
+
+help:
+	@echo -e $(usage)
+
+init: $(cfg_dir)/$(indir).json
+	rm -f $(cfg_dir)/$(indir)/*.json
+	$(PYTHON) gen_json.py -i $^
+	find $(cfg_dir)/$(indir) -type f -name "*.json" | wc -w
+
+# User specific targets
+$(res_dir)/$(indir)/%.pkl: $(cfg_dir)/$(indir)/%.json
+	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
