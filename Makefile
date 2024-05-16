@@ -18,7 +18,7 @@ endif
 cfg_dir=configs
 res_dir=results
 
-usage="USAGE:\nmake init indir=example\nmake script=main.py indir=example verbose=1 n_jobs=<Number of tasks per process> -j <Total number of processes>"
+usage="USAGE:\nmake indir=example\nmake script=main.py indir=example verbose=1 n_jobs=<Number of tasks per process> -j <Total number of processes> (init)"
 
 all_configs=$(shell ls $(cfg_dir)/$(indir))
 all_targets=$(addprefix $(res_dir)/$(indir)/,$(foreach fname,$(all_configs),$(shell echo $(fname) | sed 's/.json/.pkl/g')))
@@ -38,3 +38,11 @@ init: $(cfg_dir)/$(indir).json
 # User specific targets
 $(res_dir)/$(indir)/%.pkl: $(cfg_dir)/$(indir)/%.json
 	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
+
+
+# These targets will catch the cases where you specify the name of the config file as a target.
+%:
+	make indir=$* n_jobs=$(n_jobs) script=$(script) verbose=$(verbose) -j $(n_jobs)
+
+%-init:
+	make indir=$* init n_jobs=$(n_jobs) script=$(script) verbose=$(verbose)
