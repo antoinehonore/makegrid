@@ -28,9 +28,17 @@ npm init using barketplace/makegrid
 ```
 
 
-
 ## Example
-The parameter grid is defined in a json file, e.g. `configs/example.json`.
+The parameter grid is defined in a json file, e.g. `configs/example.json`:
+```bash
+cat configs/example.json
+{
+    "set_of_options1":{
+        "option_a": [1, 2, 3, 4], 
+        "option_b": ["this", 33, "that"]
+    }
+}
+```
 
 Note 1: The field names must not contain the colon(`:`) character.
 
@@ -38,9 +46,9 @@ Note 2: Computing all the combinations of parameters is done in only 1 process. 
 
 1. Create all the `12` possible combinations of parameters in the grid defined in `configs/example.json`:
 ```bash
-make example-init
+make init indir=example
 [OR]
-make -f makefile.mk init indir=example
+make example-init
 ```
 
 Look at the first combination:
@@ -57,7 +65,7 @@ $ cat configs/example/1.json
 2. For a dry-run of the grid, use the `-n` option :
 
 ```bash
-$ make -f makefile.mk indir=example script=main.py n_jobs=4 verbose=1 -n
+$ make indir=example script=main.py n_jobs=4 verbose=1 -n
 python main.py -i configs/example/10.json -v 1 -j 4
 python main.py -i configs/example/11.json -v 1 -j 4
 python main.py -i configs/example/12.json -v 1 -j 4
@@ -80,11 +88,11 @@ Note: The name of the script can be edited in the `Makefile` or passed as an arg
 3. For a real run of all the configurations, using 2 parallel processes, and with 4 tasks per process:
 
 ```bash
-make -f makefile.mk indir=example n_jobs=4 -j 2
+make indir=example n_jobs=4 -j 2
 ```
 
 ## Interpreter
-You need a Python interpreter in order to run the `make -f makefile.mk init indir=example` command, i.e. to compute the combination of options in a grid.
+You need a Python interpreter in order to run the `make init indir=example` command, i.e. to compute the combination of options in a grid.
 The interpreter is specified in the `cfg.mk` file.
 
 ### Python interpreter on the host
@@ -93,7 +101,7 @@ PYTHON=python
 ```
 
 ### In a container
-To use a python interpreter inside an apptainer container file `env.sif`, you can use e.g.
+To use a python interpreter inside an `apptainer` container file `env.sif`, you can use e.g.
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```

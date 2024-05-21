@@ -1,3 +1,6 @@
 {
-    "set_of_options1":{"option_a":[1,2,3,4], "option_b":["this", 33, "that"]}
+    "set_of_options1":{
+        "option_a":[1,2,3,4], 
+        "option_b":["this", 33, "that"]
+    }
 }
