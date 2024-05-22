@@ -106,7 +106,7 @@ To use a python interpreter inside an `apptainer` container file `env.sif`, you 
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
-### Slurm
+### Slurm (Simple Linux Utility for Resource Management) 
 Slurm is a queuing system that allow user to share a common compute ressource. To request resources for specific inline-commands, you can use the `SLURM` argument for the Makefile, e.g.:
 ```bash
 $ make indir=example SLURM="srun --gpus=1" -n
@@ -137,7 +137,7 @@ To read more about `apptainer`: ![https://apptainer.org/docs/user/latest/](https
 The repo is still usable if your parameter grid configures scripts that are not written in Python. 
 To adapt for this, modify the recipe corresponding to the last target in the `Makefile`:
 ```bash
-$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
+$(SLURM) $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
 The symbol `$^` refers to all the dependencies (here, to only one: `$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
