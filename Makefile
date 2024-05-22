@@ -37,7 +37,7 @@ init: $(cfg_dir)/$(indir).json
 
 # User specific targets
 $(res_dir)/$(indir)/%.pkl: $(cfg_dir)/$(indir)/%.json
-	$(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
+	$(SLURM) $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 
 
 

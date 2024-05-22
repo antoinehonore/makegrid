@@ -91,6 +91,7 @@ Note: The name of the script can be edited in the `Makefile` or passed as an arg
 make indir=example n_jobs=4 -j 2
 ```
 
+
 ## Interpreter
 You need a Python interpreter in order to run the `make init indir=example` command, i.e. to compute the combination of options in a grid.
 The interpreter is specified in the `cfg.mk` file.
@@ -105,6 +106,29 @@ To use a python interpreter inside an `apptainer` container file `env.sif`, you 
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
+### Slurm
+Slurm is a queuing system that allow user to share a common compute ressource. To request resources for specific inline-commands, you can use the `SLURM` argument for the Makefile, e.g.:
+```bash
+$ make indir=example SLURM="srun --gpus=1" -n
+srun --gpus=1 python main.py -i configs/example/10.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/11.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/12.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/1.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/2.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/3.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/4.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/5.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/6.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/7.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/8.json -v 0 -j 1
+srun --gpus=1 python main.py -i configs/example/9.json -v 0 -j 1
+```
+
+Note: Since this will request `1` specific GPU for the execution of each command, it makes sense to submit all the requests in parallel:
+```bash
+$ make indir=example SLURM="srun --gpus=1" -j 12
+```
+
 
 The `--nv` flag is specific to `apptainer` and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
 To read more about `apptainer`: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
