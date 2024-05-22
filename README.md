@@ -106,8 +106,8 @@ To use a python interpreter inside an `apptainer` container file `env.sif`, you 
 PYTHON=apptainer exec --nv env.sif python3
 ```
 
-The `--nv` flag is specific to singularity and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
-To read more about apptainer: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
+The `--nv` flag is specific to `apptainer` and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
+To read more about `apptainer`: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
 
 ### Non-python code
 The repo is still usable if your parameter grid configures scripts that are not written in Python. 
@@ -116,8 +116,8 @@ To adapt for this, modify the recipe corresponding to the last target in the `Ma
 $(PYTHON) $(script) -i $^ -v $(verbose) -j $(n_jobs)
 ```
 
-The symbol `$^` refers to all the dependencies (here `$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
+The symbol `$^` refers to all the dependencies (here, to only one: `$(cfg_dir)/$(indir)/%.json`) required to produce the target (`$(res_dir)/$(indir)/%.pkl`).
 In makegrid, the first (and only) dependency is a configuration file.
 
-Note: Here the targets are never actually created and are just placeholders to trigger the execution of the recipies.
+Note: Here the targets `.pkl` are never actually created and are just placeholders to trigger the execution of the recipies.
 
