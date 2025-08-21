@@ -106,6 +106,10 @@ To use a python interpreter inside an `apptainer` container file `env.sif`, you 
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
+
+The `--nv` flag is specific to `apptainer` and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
+To read more about `apptainer`: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
+
 ### Slurm (Simple Linux Utility for Resource Management) 
 Slurm is a queuing system that allow user to share a common compute ressource. To request resources for specific inline-commands, you can use the `SLURM` argument for the Makefile, e.g.:
 ```bash
@@ -129,9 +133,6 @@ Note: Since this will request `1` specific GPU for the execution of each command
 $ make indir=example SLURM="srun --gpus=1" -j 12
 ```
 
-
-The `--nv` flag is specific to `apptainer` and maps the nvidia binaries inside the container. This makes GPUs available on the host, also available in the container.
-To read more about `apptainer`: ![https://apptainer.org/docs/user/latest/](https://apptainer.org/docs/user/latest/)
 
 ### Non-python code
 The repo is still usable if your parameter grid configures scripts that are not written in Python. 
