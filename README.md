@@ -5,7 +5,7 @@ Run a grid of script parameters in parallel processes with a Makefile.
 
 ## Requirements
 You need make and Python.
-To understand the `Makefile` you can look at e.g. ![https://makefiletutorial.com/](https://makefiletutorial.com/).
+To understand the `Makefile` you can look at ![https://makefiletutorial.com/](https://makefiletutorial.com/).
 
 ### For Debian/Ubuntu:
 ```bash
@@ -102,7 +102,7 @@ PYTHON=python
 ```
 
 ### In a container
-To use a python interpreter inside an `apptainer` container file `env.sif`, you can use e.g.
+To use a python interpreter inside an `apptainer` container file `env.sif`, you can use
 ```bash
 PYTHON=apptainer exec --nv env.sif python3
 ```
